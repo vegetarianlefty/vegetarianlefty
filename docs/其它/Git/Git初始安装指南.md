@@ -213,7 +213,7 @@ John Doe
 
 ```
 git config --global user.name 'user_name'
-git config --global user.name 'user_name'
+git config --global user.email 'user_email'
 ```
 
 #### 查看user配置
