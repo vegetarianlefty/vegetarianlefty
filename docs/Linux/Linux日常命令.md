@@ -2,23 +2,7 @@
 
 ```
 firewall-cmd --zone=public --add-port=端口号/tcp --permanent
-
-查看所有打开的端口
-firewall-cmd --zone=public --list-ports 
-
-开放3306端口
-firewall-cmd --zone=public --add-port=3306/tcp --permanent
-
-关闭3306端口
-firewall-cmd --zone=public --remove-port=3306/tcp --permanent
-
-配置立即生效
-firewall-cmd --reload 
-
-重启防火墙      
-systemctl restart firewalld.service
-
-
+firewall-cmd --reload  开启端口防火墙
 ```
 
 ### 查看磁盘存储空间
