@@ -126,7 +126,7 @@ nvm 需要手动指定路径
 ```text
 npm ------- https://registry.npmjs.org/
 cnpm ------ http://r.cnpmjs.org/
-taobao ---- https://registry.npm.taobao.org/
+taobao ---- http://registry.npmmirror.com
 nj -------- https://registry.nodejitsu.com/
 rednpm ---- http://registry.mirror.cqupt.edu.cn/
 npmMirror - https://skimdb.npmjs.com/registry/
@@ -135,7 +135,7 @@ jnpm ------ http://registry.m.jd.com/
 jd -------- http://registry.m.jd.com/
 
 
-npm config set registry https://registry.npm.taobao.org/
+sudo npm config set registry http://registry.npmmirror.com
 
 使用nrm镜像源管理工具
 npm install nrm -g

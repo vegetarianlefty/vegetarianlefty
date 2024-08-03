@@ -326,3 +326,9 @@ Select Rebel Agents选项中包含三个值：
 从上往下，一点点往下翻，会浪费很多时间。那么有没有办法，能够快速翻到想看的代码呢？
 
 答：有，可以使用`CodeGlance`插件。![图片](http://image.wangxiaohuan.com/blog/image/202210171129735.png)安装完插件之后，在代码右侧，会出现下面这个窗口：![图片](http://image.wangxiaohuan.com/blog/image/202210171129234.png)它是代码的缩略图，通过它我们能够非常快速的切换代码块。
+
+
+
+### google-java-format —— 代码自动格式化
+
+这个插件的优点在于不需要手动快捷键去格式化代码

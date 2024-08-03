@@ -36,238 +36,177 @@ rpm -e --nodeps mysql　　// 强力删除模式，如果使用上面命令删�
 ![img](https://www.runoob.com/wp-content/uploads/2014/03/repo-name-small.png)
 
 ```
-wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
-rpm -ivh mysql-community-release-el7-5.noarch.rpm
-yum update
-yum install mysql-server
+wget http://repo.mysql.com/mysql80-community-release-el7-7.noarch.rpm
+
+rpm -ivh mysql80-community-release-el7-7.noarch.rpm
+
+yum install -y mysql mysql-server
+
+# 修改配置文件
+vim /etc/my.cnf
+lower_case_table_names=1
+
+# 重启mysql
+systemctl restart mysqld
+
+# 查看默认密码
+grep password /var/log/mysqld.log
+
+假如默认密码是 abcdef
+
+mysql -u root -p 
+
+# mysql client 链接 mysql
+alter user 'root'@'localhost' identified by 'abcdef';
+set global validate_password.check_user_name=0;
+set global validate_password.policy=0;
+set global validate_password.length=1;
+//把默认密码改为 root123456
+alter user 'root'@'localhost' identified by 'root123456';
+
+# 修改为允许远程访问
+use mysql;
+update user set host = '%' where user = 'root';
+FLUSH PRIVILEGES;
 ```
 
-权限设置：
+> [!NOTE]
+>
+>  [获取 GPG 密钥失败： [Errno 14\] curl#37 - "Couldn't open file /etc/pki/rpm-gpg/RPM-GPG-KEY-mysql"
+>
+> 原因： GPG对于包的源key的验证没有通过
+>
+> 处理办法：
+> 在yum install 版本后面加上 --nogpgcheck，即可绕过GPG验证成功安装
+> yum install mysql-community-server --nogpgcheck
+
+ MySQL 命令
 
 ```
-chown -R mysql:mysql /var/lib/mysql/
-```
+查看root临时密码
+grep "A temporary password" /var/log/mysqld.log
 
-初始化 MySQL：
-
-```
-mysqld --initialize
-```
-
-启动 MySQL：
-
-```
+启动 MySQL
 systemctl start mysqld
-```
 
-查看 MySQL 运行状态：
+停止 MySQL
+systemctl stop mysqld
 
-```
+查看 MySQL 运行状态
 systemctl status mysqld
+
+开机启动命令：
+systemctl enable mysqld
+systemctl daemon-reload
 ```
 
-**注意：**如果我们是第一次启动 mysql 服务，mysql 服务器首先会进行初始化的配置。
-
-> 此外,你也可以使用 MariaDB 代替，MariaDB 数据库管理系统是 MySQL  的一个分支，主要由开源社区在维护，采用 GPL 授权许可。开发这个分支的原因之一是：甲骨文公司收购了 MySQL 后，有将 MySQL  闭源的潜在风险，因此社区采用分支的方式来避开这个风险。
->
-> MariaDB的目的是完全兼容MySQL，包括API和命令行，使之能轻松成为MySQL的代替品。
->
-> ```
-> yum install mariadb-server mariadb 
-> ```
->
-> mariadb数据库的相关命令是：
->
-> ```
-> systemctl start mariadb  #启动MariaDB
-> systemctl stop mariadb  #停止MariaDB
-> systemctl restart mariadb  #重启MariaDB
-> systemctl enable mariadb  #设置开机启动
-> ```
-
-------
-
-## 验证 MySQL 安装
-
-在成功安装 MySQL 后，一些基础表会表初始化，在服务器启动后，你可以通过简单的测试来验证 MySQL 是否工作正常。
-
-使用 mysqladmin 工具来获取服务器状态：
-
-使用 mysqladmin 命令来检查服务器的版本, 在 linux 上该二进制文件位于 /usr/bin 目录，在 Windows 上该二进制文件位于C:\mysql\bin 。
+防火墙设置
 
 ```
-[root@host]# mysqladmin --version
-```
 
-linux上该命令将输出以下结果，该结果基于你的系统信息：
+查看所有打开的端口
+firewall-cmd --zone=public --list-ports 
 
-```
-mysqladmin  Ver 8.23 Distrib 5.0.9-0, for redhat-linux-gnu on i386
-```
+开放3306端口
+firewall-cmd --zone=public --add-port=3306/tcp --permanent
 
-如果以上命令执行后未输出任何信息，说明你的Mysql未安装成功。
+关闭3306端口
+firewall-cmd --zone=public --remove-port=3306/tcp --permanent
 
-------
+配置立即生效
+firewall-cmd --reload 
 
-## 使用 MySQL Client(Mysql客户端) 执行简单的SQL命令
-
-你可以在 MySQL Client(Mysql客户端) 使用 mysql 命令连接到 MySQL 服务器上，默认情况下 MySQL 服务器的登录密码为空，所以本实例不需要输入密码。
-
-命令如下：
+重启防火墙      
+systemctl restart firewalld.service
 
 ```
-[root@host]# mysql
-```
 
-以上命令执行后会输出 mysql>提示符，这说明你已经成功连接到Mysql服务器上，你可以在 mysql> 提示符执行SQL命令：
-
-```
-mysql> SHOW DATABASES;
-+----------+
-| Database |
-+----------+
-| mysql    |
-| test     |
-+----------+
-2 rows in set (0.13 sec)
-```
-
-------
-
-## Mysql安装后需要做的
-
-Mysql安装成功后，默认的root用户密码为空，你可以使用以下命令来创建root用户的密码：
-
-```
-[root@host]# mysqladmin -u root password "new_password";
-```
-
-现在你可以通过以下命令来连接到Mysql服务器：
-
-```
-[root@host]# mysql -u root -p
-Enter password:*******
-```
-
-**注意：**在输入密码时，密码是不会显示了，你正确输入即可。
-
-------
-
-## Windows 上安装 MySQL 
-
-
-
-Windows 上安装 MySQL 相对来说会较为简单，最新版本可以在 [MySQL 下载](https://dev.mysql.com/downloads/mysql/) 中下载中查看(**更详细安装：[Windows 上安装 MySQL](https://www.runoob.com/w3cnote/windows10-mysql-installer.html)**)。
-
-![img](https://www.runoob.com/wp-content/uploads/2014/03/330405-20160709174318905-664331194.png)
-
-![img](https://www.runoob.com/wp-content/uploads/2014/03/20DBD7BA-A653-4AE3-887E-2A16E6EBB2E3.png)
-
-点击 **Download** 按钮进入下载页面，点击下图中的 **No thanks, just start my download.** 就可立即下载：
-
-
-
-![img](https://www.runoob.com/wp-content/uploads/2014/03/330405-20160709174941374-1821908969.png)
-
-下载完后，我们将 zip 包解压到相应的目录，这里我将解压后的文件夹放在 **C:\web\mysql-8.0.11** 下。
-
-**接下来我们需要配置下 MySQL 的配置文件**
-
-打开刚刚解压的文件夹 **C:\web\mysql-8.0.11** ，在该文件夹下创建 **my.ini** 配置文件，编辑 **my.ini** 配置以下基本信息：
-
-```
-[client]
-# 设置mysql客户端默认字符集
-default-character-set=utf8
  
+
+### 配置文件
+
+4 个 vCPU 和 16 GB 内存的 CentOS 7 系统上安装 MySQL 5.7 时，可以根据这些资源来优化 MySQL 的配置文件 `/etc/my.cnf`。以下是一个适合这种硬件配置的 MySQL 配置文件示例，包含关键参数的建议值：
+
+`/etc/my.cnf` 配置文件示例
+
+```
 [mysqld]
-# 设置3306端口
+# 基本设置
+user = mysql
 port = 3306
-# 设置mysql的安装目录
-basedir=C:\\web\\mysql-8.0.11
-# 设置 mysql数据库的数据的存放目录，MySQL 8+ 不需要以下配置，系统自己生成即可，否则有可能报错
-# datadir=C:\\web\\sqldata
-# 允许最大连接数
-max_connections=20
-# 服务端使用的字符集默认为8比特编码的latin1字符集
-character-set-server=utf8
-# 创建新表时将使用的默认存储引擎
-default-storage-engine=INNODB
+bind-address = 0.0.0.0
+datadir = /var/lib/mysql
+socket = /var/lib/mysql/mysql.sock
+
+# MyISAM 引擎设置
+key_buffer_size = 64M
+myisam_recover_options = FORCE,BACKUP
+
+# InnoDB 引擎设置
+innodb_buffer_pool_size = 12G         # 分配给 InnoDB 缓冲池约占总内存的70-75%
+innodb_log_file_size = 1G             # 较大的日志文件可以减少磁盘写入次数
+innodb_log_buffer_size = 16M          # 日志缓冲区大小
+innodb_flush_log_at_trx_commit = 1    # 事务日志的刷新策略 (1 = 每次事务提交时刷新)
+innodb_file_per_table = 1             # 为每个表使用单独的表空间
+innodb_flush_method = O_DIRECT        # 使用直接 I/O，避免文件系统缓存的双重缓存
+innodb_io_capacity = 2000             # I/O 操作的最大数目，适当调整以匹配磁盘能力
+
+# 查询缓存设置 (注意：MySQL 5.7 默认禁用查询缓存)
+query_cache_type = 0                  # 禁用查询缓存以避免潜在的锁争用问题
+query_cache_size = 0
+
+# 连接设置
+max_connections = 500                 # 最大连接数，根据实际需要调整
+max_connect_errors = 100000           # 允许最大连接错误数
+
+# 线程和缓存设置
+thread_cache_size = 50                # 缓存线程数，减少线程创建的开销
+table_open_cache = 4096               # 打开表缓存，适当增大以提高性能
+table_definition_cache = 2048         # 表定义缓存大小
+
+# 临时表设置
+tmp_table_size = 256M                 # 内存临时表大小
+max_heap_table_size = 256M            # 最大内存临时表大小
+
+# 日志设置
+log_error = /var/log/mysql/error.log   # 错误日志文件
+slow_query_log = 1                    # 启用慢查询日志
+slow_query_log_file = /var/log/mysql/mysql-slow.log
+long_query_time = 2                   # 慢查询阈值时间 (秒)
+
+# 二进制日志设置 (如果需要开启二进制日志功能)
+server-id = 1                         # 服务器ID, 需唯一
+log_bin = /var/lib/mysql/mysql-bin
+binlog_format = ROW                   # 二进制日志格式 (ROW 更加可靠)
+expire_logs_days = 7                  # 二进制日志保留天数
+max_binlog_size = 100M                # 二进制日志的最大大小
+
+# 文件句柄限制
+open_files_limit = 65535              # 最大文件句柄数
+
+# 调整内存分配和优化内存使用
+join_buffer_size = 256K
+sort_buffer_size = 4M
+read_buffer_size = 4M
+read_rnd_buffer_size = 4M
 ```
 
-**接下来我们来启动下 MySQL  数据库：**
+### 参数说明
 
-以管理员身份打开 cmd 命令行工具，切换目录：
+- **`innodb_buffer_pool_size`**: 这是 MySQL InnoDB 引擎的最重要的参数，决定了用于缓存数据和索引的内存大小。设置为可用内存的 70%-75% 左右，确保剩余内存足够处理操作系统和其他进程的需求。
+- **`innodb_log_file_size`**: 较大的日志文件可以减少磁盘写入次数，但在崩溃恢复时可能会稍慢。通常设置为 1G 左右。
+- **`max_connections`**: 设定 MySQL 同时连接的最大数量，500 是一个合理的默认值，具体数值取决于你的应用负载。
+- **`query_cache_size` 和 `query_cache_type`**: 在 MySQL 5.7 中，查询缓存默认禁用，因为它在高并发情况下可能成为瓶颈。
+- **`tmp_table_size` 和 `max_heap_table_size`**: 设置内存中允许的最大临时表大小，建议设置为较大的值以减少磁盘临时表的创建。
+- **`log_error` 和 `slow_query_log`**: 记录错误日志和慢查询日志对于调试和优化非常重要。
+- **`innodb_flush_log_at_trx_commit`**: 设置为 `1` 时，每次事务提交时都会将日志刷新到磁盘，这保证了数据的持久性但可能影响性能。设置为 `2` 可以在稍微牺牲持久性的情况下提高性能。
+- **`innodb_io_capacity`**: 调整以匹配磁盘的 I/O 能力，默认值通常较低，可以根据你的磁盘性能适当增加。
+- **`open_files_limit`**: 设置 MySQL 进程能够打开的最大文件数，适用于高并发和大量表的情况。
 
-```
-cd C:\web\mysql-8.0.11\bin
-```
+### 其他优化建议
 
-初始化数据库：
+- **定期分析慢查询日志**: 通过分析慢查询日志，识别并优化性能瓶颈。
+- **使用 `MySQLTuner` 工具**: 安装并运行 `MySQLTuner`，获取更具体的优化建议。
+- **监控系统资源使用**: 使用 `top`, `htop`, `iostat`, `vmstat` 等工具实时监控 CPU、内存和磁盘 I/O，了解 MySQL 对系统资源的消耗情况。
 
-```
-mysqld --initialize --console
-```
-
-执行完成后，会输出 root 用户的初始默认密码，如：
-
-```
-...
-2018-04-20T02:35:05.464644Z 5 [Note] [MY-010454] [Server] A temporary password is generated for root@localhost: APWCY5ws&hjQ
-...
-```
-
-APWCY5ws&hjQ 就是初始密码，后续登录需要用到，你也可以在登陆后修改密码。
-
-输入以下安装命令：
-
-```
-mysqld install
-```
-
-启动输入以下命令即可：
-
-```
-net start mysql
-```
-
-> 注意: 在 5.7 需要初始化 data 目录：
->
-> ```
-> cd C:\web\mysql-8.0.11\bin 
-> mysqld --initialize-insecure 
-> ```
->
-> 初始化后再运行 net start mysql 即可启动 mysql。
-
-------
-
-## 登录 MySQL
-
-当 MySQL 服务已经运行时, 我们可以通过 MySQL 自带的客户端工具登录到 MySQL 数据库中, 首先打开命令提示符, 输入以下格式的命名:
-
-```
-mysql -h 主机名 -u 用户名 -p
-```
-
-参数说明：
-
-- **-h** : 指定客户端所要登录的 MySQL 主机名, 登录本机(localhost 或 127.0.0.1)该参数可以省略;
-- **-u** : 登录的用户名;
-- **-p** : 告诉服务器将会使用一个密码来登录, 如果所要登录的用户名密码为空, 可以忽略此选项。
-
-如果我们要登录本机的 MySQL 数据库，只需要输入以下命令即可：
-
-```
-mysql -u root -p
-```
-
-按回车确认, 如果安装正确且 MySQL 正在运行, 会得到以下响应:
-
-```
-Enter password:
-```
-
-若密码存在, 输入密码登录, 不存在则直接按回车登录。登录成功后你将会看到 Welcome to the MySQL monitor... 的提示语。
-
-然后命令提示符会一直以 mysql> 加一个闪烁的光标等待命令的输入, 输入 **exit** 或 **quit** 退出登录。
+这个配置是基于典型的负载和资源分配的建议。实际生产环境中，可能需要根据应用负载和性能要求进行进一步的微调。
