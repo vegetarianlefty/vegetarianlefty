@@ -15,7 +15,7 @@ brew -v           //查看当前版本
 
 brew config       //查看当前版本,详细安装环境信息
 
-brew udpate       //更新 Homebrew
+brew update       //更新 Homebrew
 
 brew install git  //安装软件包
 
@@ -44,6 +44,10 @@ brew services list //查询所有包
 brew services start activemq //启动包（以activemq为例子）
 
 brew services stop activemq //停止包（以activemq为例子）
+
+brew cleanup --prune=all    //清理残留文件
+
+brew autoremove  //自动删除
 
 卸载Homebrew
 cd `brew --prefix`
