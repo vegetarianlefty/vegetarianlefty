@@ -27,6 +27,15 @@ insgesamt 0
 [vagrant@tool yum.repos.d]$ 
 ```
 
+### 在 CentOS上安装 wget
+
+```
+ # CentOS 7 或 RHEL 7 
+sudo yum install wget  
+ # CentOS 8 或 RHEL 8 及以上
+sudo dnf install wget 
+```
+
 
 
 ### 利用[wget](https://so.csdn.net/so/search?q=wget&spm=1001.2101.3001.7020)下载阿里云repo文件
