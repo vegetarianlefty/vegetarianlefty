@@ -11,15 +11,18 @@
     * [07Java并发--Java中的线程池](./docs/Java/Java并发/07Java并发--Java中的线程池.md)
     * 
   - JVM虚拟机
+  
 - Spring
   - Spring基础 
   * SpringBoot
     * [SpringBoot内置工具类总结](./docs/Spring/SpringBoot/SpringBoot内置工具类总结.md)
     * [SpringBoot使用Event来进行业务耦合](./docs/Spring/SpringBoot/SpringBoot使用Event来进行业务耦合.md)
     * [SpringBoot事件Event原理分析](./docs/Spring/SpringBoot/SpringBoot事件Event原理分析.md)
+  
 - 微服务
   - Spring  Cloud
   - Dubbo
+  
 - [设计模式](./docs/设计模式/设计模式介绍.md)
   - [0设计模式--设计原则](./docs/设计模式/00设计模式--设计原则.md)
   - [01设计模式--工厂方法模式](./docs/设计模式/01设计模式--工厂方法模式.md)
@@ -45,6 +48,7 @@
   - [21设计模式--访问者模式](./docs/设计模式/21设计模式--访问者模式.md)
   - [22设计模式--中介者模式](./docs/设计模式/22设计模式--中介者模式.md)
   - [23设计模式--解释器模式](./docs/设计模式/23设计模式--解释器模式.md)
+  
 - [数据结构](./docs/数据结构/数据结构.md)
   - [01数据结构--数组](./docs/数据结构/01数据结构--数组.md)
   - [02数据结构--链表](./docs/数据结构/02数据结构--链表.md)
@@ -56,6 +60,7 @@
   - [08数据结构--跳表](./docs/数据结构/08数据结构--跳表.md)
   - [09数据结构--图](./docs/数据结构/09数据结构--图.md)
   - [10数据结构-- Tire树](./docs/数据结构/10数据结构--Tire树.md)
+  
 - 算法
   - [01算法--递归](./docs/算法/01算法--递归.md)
   - [02算法--排序](./docs/算法/02算法--排序.md)
@@ -67,14 +72,33 @@
   - [08算法--回溯算法](./docs/算法/08算法--回溯算法.md)
   - [09算法--动态规划](./docs/算法/09算法--动态规划.md)
   - [10算法--字符串匹配算法](./docs/算法/10算法--字符串匹配算法.md)
+  
 - 数据库及持久化框架
   * MySql
   * Redis
   * MyBatis
+  * Redis
+    * [01Redis介绍](./docs/数据库及持久化框架/Redis/01Redis介绍.md)
+    * [02Redis安装](./docs/数据库及持久化框架/Redis/02Redis安装.md)
+    * [03Redis数据类型](./docs/数据库及持久化框架/Redis/03Redis数据类型.md)
+    * [04Redis数据操作命令](./docs/数据库及持久化框架/Redis/04Redis数据操作命令.md)
+    * [05Redis持久化介绍](./docs/数据库及持久化框架/Redis/05Redis持久化介绍.md)
+    * [06Redis持久化之AOF](./docs/数据库及持久化框架/Redis/06Redis持久化之AOF.md)
+    * [07Redis持久化之RDB](./docs/数据库及持久化框架/Redis/07Redis持久化之RDB.md)
+    * [08Redis事务](./docs/数据库及持久化框架/Redis/08Redis事务.md)
+    * [09Redis管道](./docs/数据库及持久化框架/Redis/09Redis管道.md)
+    * [10Redis发布订阅](./docs/数据库及持久化框架/Redis/10Redis发布订阅.md)
+    * [11Redis主从复制](./docs/数据库及持久化框架/Redis/11Redis主从复制.md)
+    * [12Redis哨兵监控](./docs/数据库及持久化框架/Redis/12Redis哨兵监控.md)
+    * [13Redis集群介绍](./docs/数据库及持久化框架/Redis/13Redis集群介绍.md)
+    * [14Redis集群配置](./docs/数据库及持久化框架/Redis/14Redis集群配置.md)
+    * [15Redis配置文件解读](./docs/数据库及持久化框架/Redis/15Redis配置文件解读.md)
+  
 - 消息队列
   * Kafka
   * RabbitMQ
   * RocketMQ
+  
 - Linux
 
   - [Linux基础命令](./docs/Linux/Linux基础命令.md)
@@ -82,17 +106,49 @@
   - [Linux 之Centos 7上安装Cockpit监控服务器](./docs/Linux/Linux 之Centos 7上安装Cockpit监控服务器.md)
   - [Linux 之CentOS 7防火墙配置命令](./docs/Linux/Linux 之CentOS 7防火墙配置命令.md)
   - [Linux 之CentOS7 配置阿里云yum源](./docs/Linux/Linux 之CentOS7 配置阿里云yum源.md)
-- Vue
+  
+- 前端
+  * 网络
+    * [浏览器跨域](./docs/前端/网络/浏览器跨域.md)
+  * uni-app-x
+    * [uni-app-x介绍](./docs/前端/uni-app-x/uni-app介绍.md)
+  * Vue
+    * [Vue简介](./docs/前端/Vue/Vue简介.md)
+  * [Vue项目文件命名规范](./docs/前端/Vue项目文件命名规范.md)
+  * [代码校验和格式化工具配置](./docs/前端/代码校验和格式化工具配置.md)
+  
 - 其他
   * Git
     * [Git初始安装指南](./docs/其它/Git/Git初始安装指南.md)
     * [Git代码提交规范](./docs/其它/Git/Git代码提交规范.md)
     * [Git基础命令操作](./docs/其它/Git/Git基础命令操作.md)
-  * Vim
+    * [Git分支策略规范](./docs/其它/Git/Git分支策略规范.md)
+    * [Git配置SSH密钥](./docs/其它/Git/Git配置SSH密钥.md)
+    * [GitHub管理项目](./docs/其它/Git/GitHub管理项目.md)
+    * [GitHub使用技巧](./docs/其它/Git/GitHub使用技巧.md)
+    * [GitLab安装介绍](./docs/其它/Git/GitLab安装介绍.md)
+    * [GitLab自动化部署](./docs/其它/Git/GitLab自动化部署.md)
+  * Maven
+  
+    * [Maven介绍](./docs/其它/Maven/Maven介绍.md)
+    * [Maven命令介绍](./docs/其它/Maven/Maven命令介绍.md)
+    * [Maven中Pom配置文件详解](./docs/其它/Maven/Maven中Pom配置文件详解.md)
+    * [Maven 打包跳过测试](./docs/其它/Maven/Maven 打包跳过测试.md)
+    * [Maven解决依赖冲突](./docs/其它/Maven/Maven解决依赖冲突.md)
   * 软件工具
     * [Apifox接口文档测试工具介绍](./docs/其它/软件工具/Apifox接口文档测试工具介绍.md)
     * [Mac下Homebrew常用命令](./docs/其它/软件工具/Mac下Homebrew常用命令.md)
     * [Mac上使用jenv管理多个JDK版本](./docs/其它/软件工具/Mac上使用jenv管理多个JDK版本.md)
+    * [流程图和工具介绍](./docs/其它/软件工具/流程图和工具介绍.md)
+    * [软件版本号介绍](./docs/其它/软件工具/软件版本号介绍.md)
+    * [神级代码注释](./docs/其它/软件工具/神级代码注释.md)
+    * [frp内网穿透](./docs/其它/软件工具/frp内网穿透.md)
+    * [IDEA插件介绍](./docs/其它/软件工具/IDEA插件介绍.md)
+    * [Jenkins项目构建](./docs/其它/软件工具/Jenkins项目构建.md)
+    * [Mac 系统配置单](./docs/其它/软件工具/Mac 系统配置单.md)
+    * [Mac上使用n和nvm管理多个node版本](./docs/其它/软件工具/Mac上使用n和nvm管理多个node版本.md)
+    * [Mac下IDEA不提示语法](./docs/其它/软件工具/Mac下IDEA不提示语法.md)
+    * [Mac下IDEA快捷键](./docs/其它/软件工具/Mac下IDEA快捷键.md)
 
 
 
