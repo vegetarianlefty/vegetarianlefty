@@ -40,7 +40,7 @@ wget http://repo.mysql.com/mysql80-community-release-el7-7.noarch.rpm
 
 rpm -ivh mysql80-community-release-el7-7.noarch.rpm
 
-yum install -y mysql mysql-server
+yum install -y mysql mysql-server --nogpgcheck
 
 # 修改配置文件
 vim /etc/my.cnf
@@ -210,3 +210,68 @@ read_rnd_buffer_size = 4M
 - **监控系统资源使用**: 使用 `top`, `htop`, `iostat`, `vmstat` 等工具实时监控 CPU、内存和磁盘 I/O，了解 MySQL 对系统资源的消耗情况。
 
 这个配置是基于典型的负载和资源分配的建议。实际生产环境中，可能需要根据应用负载和性能要求进行进一步的微调。
+
+### MySQL 卸载
+
+#### 停止MySQL服务：
+
+在卸载MySQL之前，需要确保MySQL服务已停止。可以使用以下命令来停止MySQL服务：
+
+```
+sudo systemctl stop mysqld
+```
+
+执行此命令后，MySQL服务将会停止。
+
+#### 卸载MySQL软件包：
+
+CentOS 7中的MySQL通常是通过yum包管理器安装的。要完全卸载MySQL及其所有相关组件，可以使用以下命令：
+
+
+
+```
+sudo yum remove mysql mysql-server mysql-client mysql-libs mysql-devel mysql-community-server mysql-community-client mysql-community-common
+```
+
+执行该命令后，系统会提示确认卸载操作，输入y并按回车键，即可完成软件包的卸载。
+
+#### 删除数据目录：
+
+MySQL的数据文件通常存储在/var/lib/mysql目录下。如果希望清除所有数据，可以手动删除这个目录：
+
+
+
+```
+sudo rm -rf /var/lib/mysql
+```
+
+请注意，这样会删除所有MySQL数据库及其相关数据，因此在执行此操作前，请确保已经备份了所需的数据。
+
+#### 删除配置文件：
+
+MySQL的配置文件一般位于/etc/my.cnf。可以使用以下命令删除它：
+
+```
+sudo rm -f /etc/my.cnf
+```
+
+此外，还可以检查/etc/mysql/和/etc/my.cnf.d/目录，删除可能存在的其他配置文件：
+
+```
+sudo rm -rf /etc/mysql/
+
+sudo rm -rf /etc/my.cnf.d/
+```
+
+#### 清除依赖和无用包：
+
+在完成MySQL的卸载后，系统中可能还残留了一些不再需要的依赖包。可以使用以下命令清除这些无用包：
+
+    sudo yum autoremove
+    sudo yum clean all
+    sudo yum makecache
+
+
+
+
+

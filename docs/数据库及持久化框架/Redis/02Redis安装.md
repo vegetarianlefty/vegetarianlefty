@@ -45,3 +45,17 @@
 > ls -l /usr/local/bin/redis-*
 >
 > rm -rf /usr/local/bin/redis-*
+>
+> 查看所有打开的端口
+> firewall-cmd --zone=public --list-ports
+>
+> 打开端口
+>
+> firewall-cmd --zone=public --add-port=6380/tcp --permanent
+>
+> 配置立即生效
+> firewall-cmd --reload 
+>
+> 重启防火墙      
+> systemctl restart firewalld.service
+

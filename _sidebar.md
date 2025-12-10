@@ -75,7 +75,6 @@
   
 - 数据库及持久化框架
   * MySql
-  * Redis
   * MyBatis
   * Redis
     * [01Redis介绍](./docs/数据库及持久化框架/Redis/01Redis介绍.md)
@@ -92,7 +91,16 @@
     * [12Redis哨兵监控](./docs/数据库及持久化框架/Redis/12Redis哨兵监控.md)
     * [13Redis集群介绍](./docs/数据库及持久化框架/Redis/13Redis集群介绍.md)
     * [14Redis集群配置](./docs/数据库及持久化框架/Redis/14Redis集群配置.md)
-    * [15Redis配置文件解读](./docs/数据库及持久化框架/Redis/15Redis配置文件解读.md)
+    * [15Redis配置文件介绍](./docs/数据库及持久化框架/Redis/15Redis配置文件介绍.md)
+    * [16Redis命令介绍](./docs/数据库及持久化框架/Redis/16Redis命令介绍.md)
+    * [17Redis单线程和多线程](./docs/数据库及持久化框架/Redis/17Redis单线程和多线程.md)
+    * [18Redis之BigKey ](./docs/数据库及持久化框架/Redis/18Redis之BigKey .md)
+    * [19Redis缓存双写一致性](./docs/数据库及持久化框架/Redis/19Redis缓存双写一致性.md)
+    * [20Redis布隆过滤器BloomFilter](./docs/数据库及持久化框架/Redis/20Redis布隆过滤器BloomFilter.md)
+    * [21Redis缓存预热雪崩击穿穿透](./docs/数据库及持久化框架/Redis/21Redis缓存预热雪崩击穿穿透.md)
+    * [22Redis分布式锁介绍](./docs/数据库及持久化框架/Redis/22Redis分布式锁介绍.md)
+    * [23Redis分布式锁Redlock算法介绍](./docs/数据库及持久化框架/Redis/23Redis分布式锁Redlock算法介绍.md)
+    * [24Redis缓存淘汰策略](./docs/数据库及持久化框架/Redis/24Redis缓存淘汰策略.md)
   
 - 消息队列
   * Kafka

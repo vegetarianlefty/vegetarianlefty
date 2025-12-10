@@ -158,3 +158,64 @@ nrm del xxx
 测试源速度
 nrm test xxx
 ```
+
+
+
+### Fnm 使用说明
+
+Fnm（Fast Node Manager）是一个用来管理和切换Node.js版本的快速、轻量级工具，使用Rust编写，比起传统的Node.js版本管理工具（如nvm）更加高效。
+
+**安装Fnm**
+
+使用Homebrew来安装Fnm，在终端中输入以下命令：
+
+```
+brew tap fnm-core/fnm
+
+brew install fnm
+```
+
+#### 常用命令
+
+- `fnm list-remote`：列出所有远程可供安装的Node.js版本。
+- `fnm install <version>`：安装指定版本的Node.js。
+- `fnm use <version>`：切换到指定版本的Node.js。
+- `node -v`：查看当前正在使用的Node.js版本。
+- `fnm list`：列出所有已经安装的Node.js版本。
+- `fnm uninstall <version>`：卸载指定版本的Node.js。
+- `fnm default <version>`：设置默认版本。
+- `fnm alias <version> <alias>`：为指定版本的Node.js设置别名。
+- `fnm unalias <alias>`：移除指定别名。
+
+### 注意事项
+
+**环境变量配置**：
+
+- 安装完成后，Fnm会自动配置环境变量。但是为了确保每次启动新终端都能使用Fnm，建议将配置添加到`~/.bash_profile`或`~/.zshrc`文件中（取决于你使用的Shell）。
+- 如果是zsh用户，可以编辑`~/.zshrc`文件，添加以下命令：
+
+```
+eval "$(fnm init)"
+```
+
+然后，关闭当前终端窗口，重新打开一个新的终端，以使配置生效。
+
+**权限问题**：
+
+- 在安装过程中，如果遇到权限问题，可以尝试在命令前添加`sudo`来获取管理员权限。但是，请注意，频繁使用`sudo`可能会导致权限混乱或安全问题。
+
+**版本兼容性**：
+
+- 在安装Node.js版本时，需要注意不同版本之间的兼容性，确保安装的版本与项目需求相匹配。
+
+**多版本管理**：
+
+- Fnm允许安装多个版本的Node.js，并通过`fnm use`命令轻松切换版本。但是，在使用多个版本时，需要注意避免版本冲突和依赖问题。
+
+**初始化配置**：
+
+- 首次安装Fnm后，建议进行初始化配置，以确保Fnm能够正常工作。可以使用`eval "$(fnm init)"`命令进行初始化。
+
+**更新Fnm**：
+
+- 随着Node.js版本的更新和Fnm功能的完善，建议定期更新Fnm以获取最新的功能和修复。可以使用`brew upgrade fnm`命令来更新Fnm。

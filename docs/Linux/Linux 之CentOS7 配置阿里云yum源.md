@@ -108,3 +108,124 @@ Metadaten-Zwischenspeicher erstellt
 [vagrant@tool yum.repos.d]$ 
 ```
 
+### **调整仓库配置**
+
+```
+sudo vi /etc/yum.repos.d/CentOS-Base.repo
+```
+
+**修改`[base]`和`[updates]`部分**：
+
+- **注释`mirrorlist`行**：在行首添加 `#`
+- **启用`baseurl`行**：删除行首的 `#`
+- **替换为以下镜像地址**（示例使用中国镜像）：
+
+```
+[base]
+name=CentOS-$releasever - Base
+baseurl=http://mirrors.aliyun.com/centos/$releasever/os/$basearch/
+#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=os
+enabled=1
+
+[updates]
+name=CentOS-$releasever - Updates
+baseurl=http://mirrors.aliyun.com/centos/$releasever/updates/$basearch/
+#mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=updates
+enabled=1
+```
+
+### **清理缓存并重试安装**
+
+**清理yum缓存**：
+
+```
+sudo yum clean all
+sudo rm -rf /var/cache/yum
+```
+
+**常用国内镜像源**
+
+- 阿里云：`http://mirrors.aliyun.com/centos/`
+- 腾讯云：`http://mirrors.cloud.tencent.com/centos/`
+- 清华：`https://mirrors.tuna.tsinghua.edu.cn/centos/`
+
+#### **步骤 1：安装并配置 EPEL 仓库**
+
+EPEL（Extra Packages for Enterprise Linux）是第三方扩展仓库，需手动安装：
+
+1. **手动下载并安装 EPEL RPM 包**（推荐使用国内镜像）：
+
+   ```
+   # 使用阿里云镜像
+   sudo wget https://mirrors.aliyun.com/epel/epel-release-latest-7.noarch.rpm
+   sudo rpm -ivh epel-release-latest-7.noarch.rpm
+   ```
+
+   ```
+   # 或使用腾讯云镜像
+   sudo wget https://mirrors.cloud.tencent.com/epel/epel-release-latest-7.noarch.rpm
+   sudo rpm -ivh epel-release-latest-7.noarch.rpm
+   ```
+
+#### **步骤 2：修改 EPEL 仓库镜像源**
+
+1. **编辑 EPEL 仓库配置文件**：
+
+   ```
+   sudo vi /etc/yum.repos.d/epel.repo
+   ```
+
+2. **替换为国内镜像源**（以阿里云为例）：
+
+   ```
+   [epel]
+   name=Extra Packages for Enterprise Linux 7 - $basearch
+   baseurl=https://mirrors.aliyun.com/epel/7/$basearch
+   #metalink=https://mirrors.fedoraproject.org/metalink?repo=epel-7&arch=$basearch
+   enabled=1
+   gpgcheck=1
+   gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
+   
+   [epel-debuginfo]
+   name=Extra Packages for Enterprise Linux 7 - $basearch - Debug
+   baseurl=https://mirrors.aliyun.com/epel/7/$basearch/debug
+   #metalink=https://mirrors.fedoraproject.org/metalink?repo=epel-debug-7&arch=$basearch
+   enabled=0
+   gpgcheck=1
+   gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
+   
+   [epel-source]
+   name=Extra Packages for Enterprise Linux 7 - $basearch - Source
+   baseurl=https://mirrors.aliyun.com/epel/7/SRPMS
+   #metalink=https://mirrors.fedoraproject.org/metalink?repo=epel-source-7&arch=$basearch
+   enabled=0
+   gpgcheck=1
+   gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
+   ```
+
+   - **关键操作**：注释 `metalink` 行，启用 `baseurl` 并指向国内镜像。
+
+#### **步骤 3：清理缓存并重试安装**
+
+1. **清除旧缓存**：
+
+   ```
+   sudo yum clean all
+   sudo rm -rf /var/cache/yum
+   ```
+
+2. **重新生成缓存**：
+
+   ```
+   sudo yum makecache
+   ```
+
+   
+
+### **附：常用国内 EPEL 镜像**
+
+| 镜像源       | `baseurl` 地址                                          |
+| :----------- | :------------------------------------------------------ |
+| **阿里云**   | `https://mirrors.aliyun.com/epel/7/$basearch`           |
+| **腾讯云**   | `https://mirrors.cloud.tencent.com/epel/7/$basearch`    |
+| **清华大学** | `https://mirrors.tuna.tsinghua.edu.cn/epel/7/$basearch` |
